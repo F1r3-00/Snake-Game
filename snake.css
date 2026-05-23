@@ -1,15 +1,21 @@
-﻿/* style.css */
+/* snake.css */
+
+/* 1. Reset e blocco scorrimento per Mobile */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    /* Impedisce il rimbalzo dello scroll su iOS */
-    position: fixed;
+    position: fixed; /* Impedisce alla pagina di muoversi mentre trascini il serpente */
     width: 100%;
+    background-color: #1a1a1a; /* Colore di sicurezza se l'immagine non carica */
 }
 
 body {
-    background-color: #2c3e50;
+    /* SFONDO: Assicurati che il file caricato su GitHub si chiami esattamente sfondo.jpg */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('snake.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,72 +23,72 @@ body {
     color: white;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     overflow: hidden;
-    touch-action: none; /* Fondamentale per il touch */
+    touch-action: none;
 }
 
+/* 2. Contenitore principale */
 #game-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    z-index: 5;
 }
 
 #score {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #ecf0f1;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 10px rgba(0,0,0,1);
 }
 
-/* Wrapper flessibile: si adatta allo schermo ma non supera i 400px */
+/* 3. WRAPPER DEL GIOCO (Il segreto per il popup corretto) */
 #canvas-wrapper {
-    position: relative;
-    width: 90vw; /* Prende il 90% della larghezza del cellulare */
-    height: 90vw; /* Mantiene il rapporto 1:1 */
-    max-width: 400px; /* Non diventa più grande di 400px su PC */
-    max-height: 400px;
+    position: relative; /* FONDAMENTALE: permette al popup di agganciarsi qui dentro */
+    width: 90vw;
+    height: 90vw;
+    max-width: 380px;
+    max-height: 380px;
     margin: 0 auto;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    border: 3px solid #2ecc71; /* Bordino verde stile Matrix */
+    box-shadow: 0 0 40px rgba(0,0,0,0.9);
 }
 
 #gameCanvas {
     background-color: #000;
-    border: 4px solid #34495e;
     display: block;
-    width: 100%; /* Riempie il wrapper */
-    height: 100%; /* Riempie il wrapper */
-    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
 
-/* Effetto sfocatura */
+/* 4. Effetto Sfocatura attivato dal JS */
 .blur-effect {
     filter: blur(8px);
     transition: filter 0.3s ease;
 }
 
-/* Popup Game Over perfettamente centrato sopra il canvas */
+/* 5. POPUP GAME OVER (Sincronizzato con showGameOver() nel JS) */
 #game-over-screen {
-    position: absolute;
+    position: absolute; /* Si posiziona SOPRA il canvas grazie al wrapper relative */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: none; /* Gestito da JS */
+    display: none; /* Inizialmente nascosto, il JS lo mette in 'flex' */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 10;
-    color: white;
+    background-color: rgba(0, 0, 0, 0.8); /* Scurisce lo sfondo per far leggere il testo */
+    z-index: 100;
     text-align: center;
 }
 
     #game-over-screen h1 {
         color: #ff4757;
-        font-size: clamp(1.5rem, 8vw, 2.5rem); /* Testo fluido: si rimpicciolisce su schermi piccoli */
+        font-size: 2.5rem;
         margin: 0;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        text-shadow: 2px 2px 10px black;
     }
 
 #final-score {
@@ -100,15 +106,133 @@ body {
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     transition: transform 0.1s;
-    -webkit-tap-highlight-color: transparent; /* Rimuove il flash blu al tocco su Android */
 }
 
     #restart-button:active {
         transform: scale(0.95);
     }
 
+/* 6. Istruzioni e Powered By */
 #instructions {
     margin-top: 15px;
     font-size: 0.9rem;
     color: #bdc3c7;
+    text-shadow: 1px 1px 2px black;
+}
+
+#powered-by {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #2ecc71; /* Verde come il serpente */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    z-index: 9999; /* Sempre visibile sopra a tutto */
+    text-shadow: 1px 1px 3px black;
+    pointer-events: none; /* Non interferisce con i tocchi del giocatore */
+}
+
+/* 7. Adattamenti per schermi molto piccoli */
+@media (max-width: 400px) {
+    #score {
+        font-size: 1.8rem;
+    }
+
+    #game-over-screen h1 {
+        font-size: 2rem;
+    }
+
+    #restart-button {
+        padding: 12px 25px;
+    }
+}
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ecf0f1;
+    text-shadow: 2px 2px 10px rgba(0,0,0,1);
+}
+
+/* IL CONTENITORE DEL GIOCO */
+#canvas-wrapper {
+    position: relative; /* Questo tiene il Game Over dentro il quadrato */
+    width: 90vw;
+    height: 90vw;
+    max-width: 380px;
+    max-height: 380px;
+    margin: 0 auto;
+    border: 3px solid #2ecc71;
+    box-shadow: 0 0 40px rgba(0,0,0,0.9);
+}
+
+#gameCanvas {
+    background-color: #000;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* SFOCATURA DEL CAMPO */
+.blur-effect {
+    filter: blur(8px);
+}
+
+/* IL POPUP DI GAME OVER (DEVE ESSERE POSITION: ABSOLUTE) */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Diventa 'flex' tramite JavaScript */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 100;
+}
+
+    #game-over-screen h1 {
+        color: #ff4757;
+        font-size: 2.5rem;
+        margin: 0;
+        text-shadow: 2px 2px 10px black;
+    }
+
+#final-score {
+    font-size: 1.2rem;
+    margin: 10px 0 20px 0;
+}
+
+#restart-button {
+    background-color: #2ed573;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+#instructions {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* MARCHIO IN BASSO A DESTRA */
+#powered-by {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #2ecc71;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    z-index: 9999;
+    text-shadow: 1px 1px 3px black;
 }
