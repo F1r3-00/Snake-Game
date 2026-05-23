@@ -1,21 +1,21 @@
-/* snake.css */
+/* snake.css - VERSIONE DEFINITIVA */
 
-/* 1. Reset e blocco scorrimento per Mobile */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    position: fixed; /* Impedisce alla pagina di muoversi mentre trascini il serpente */
+    position: fixed; /* Blocca lo scroll su mobile */
     width: 100%;
-    background-color: #1a1a1a; /* Colore di sicurezza se l'immagine non carica */
+    background-color: #1a1a1a; 
 }
 
 body {
-    /* SFONDO: Assicurati che il file caricato su GitHub si chiami esattamente sfondo.jpg */
+    /* ATTENZIONE: Se su GitHub l'immagine si chiama snake.JPG o snake.png, correggi qui sotto */
     background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('snake.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,7 +26,6 @@ body {
     touch-action: none;
 }
 
-/* 2. Contenitore principale */
 #game-container {
     display: flex;
     flex-direction: column;
@@ -43,120 +42,9 @@ body {
     text-shadow: 2px 2px 10px rgba(0,0,0,1);
 }
 
-/* 3. WRAPPER DEL GIOCO (Il segreto per il popup corretto) */
-#canvas-wrapper {
-    position: relative; /* FONDAMENTALE: permette al popup di agganciarsi qui dentro */
-    width: 90vw;
-    height: 90vw;
-    max-width: 380px;
-    max-height: 380px;
-    margin: 0 auto;
-    border: 3px solid #2ecc71; /* Bordino verde stile Matrix */
-    box-shadow: 0 0 40px rgba(0,0,0,0.9);
-}
-
-#gameCanvas {
-    background-color: #000;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-/* 4. Effetto Sfocatura attivato dal JS */
-.blur-effect {
-    filter: blur(8px);
-    transition: filter 0.3s ease;
-}
-
-/* 5. POPUP GAME OVER (Sincronizzato con showGameOver() nel JS) */
-#game-over-screen {
-    position: absolute; /* Si posiziona SOPRA il canvas grazie al wrapper relative */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none; /* Inizialmente nascosto, il JS lo mette in 'flex' */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Scurisce lo sfondo per far leggere il testo */
-    z-index: 100;
-    text-align: center;
-}
-
-    #game-over-screen h1 {
-        color: #ff4757;
-        font-size: 2.5rem;
-        margin: 0;
-        text-shadow: 2px 2px 10px black;
-    }
-
-#final-score {
-    font-size: 1.2rem;
-    margin: 10px 0 20px 0;
-}
-
-#restart-button {
-    background-color: #2ed573;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: transform 0.1s;
-}
-
-    #restart-button:active {
-        transform: scale(0.95);
-    }
-
-/* 6. Istruzioni e Powered By */
-#instructions {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: #bdc3c7;
-    text-shadow: 1px 1px 2px black;
-}
-
-#powered-by {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #2ecc71; /* Verde come il serpente */
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    z-index: 9999; /* Sempre visibile sopra a tutto */
-    text-shadow: 1px 1px 3px black;
-    pointer-events: none; /* Non interferisce con i tocchi del giocatore */
-}
-
-/* 7. Adattamenti per schermi molto piccoli */
-@media (max-width: 400px) {
-    #score {
-        font-size: 1.8rem;
-    }
-
-    #game-over-screen h1 {
-        font-size: 2rem;
-    }
-
-    #restart-button {
-        padding: 12px 25px;
-    }
-}
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #ecf0f1;
-    text-shadow: 2px 2px 10px rgba(0,0,0,1);
-}
-
 /* IL CONTENITORE DEL GIOCO */
 #canvas-wrapper {
-    position: relative; /* Questo tiene il Game Over dentro il quadrato */
+    position: relative; /* Indispensabile per il popup */
     width: 90vw;
     height: 90vw;
     max-width: 380px;
@@ -178,27 +66,27 @@ body {
     filter: blur(8px);
 }
 
-/* IL POPUP DI GAME OVER (DEVE ESSERE POSITION: ABSOLUTE) */
+/* POPUP GAME OVER */
 #game-over-screen {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: none; /* Diventa 'flex' tramite JavaScript */
+    display: none; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 100;
 }
 
-    #game-over-screen h1 {
-        color: #ff4757;
-        font-size: 2.5rem;
-        margin: 0;
-        text-shadow: 2px 2px 10px black;
-    }
+#game-over-screen h1 {
+    color: #ff4757;
+    font-size: 2.5rem;
+    margin: 0;
+    text-shadow: 2px 2px 10px black;
+}
 
 #final-score {
     font-size: 1.2rem;
@@ -235,4 +123,10 @@ body {
     letter-spacing: 2px;
     z-index: 9999;
     text-shadow: 1px 1px 3px black;
+}
+
+/* Fix per schermi piccoli */
+@media (max-width: 400px) {
+    #score { font-size: 1.8rem; }
+    #game-over-screen h1 { font-size: 2rem; }
 }
