@@ -1,0 +1,114 @@
+﻿/* style.css */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* Impedisce il rimbalzo dello scroll su iOS */
+    position: fixed;
+    width: 100%;
+}
+
+body {
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    touch-action: none; /* Fondamentale per il touch */
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#score {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ecf0f1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Wrapper flessibile: si adatta allo schermo ma non supera i 400px */
+#canvas-wrapper {
+    position: relative;
+    width: 90vw; /* Prende il 90% della larghezza del cellulare */
+    height: 90vw; /* Mantiene il rapporto 1:1 */
+    max-width: 400px; /* Non diventa più grande di 400px su PC */
+    max-height: 400px;
+    margin: 0 auto;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+#gameCanvas {
+    background-color: #000;
+    border: 4px solid #34495e;
+    display: block;
+    width: 100%; /* Riempie il wrapper */
+    height: 100%; /* Riempie il wrapper */
+    box-sizing: border-box;
+}
+
+/* Effetto sfocatura */
+.blur-effect {
+    filter: blur(8px);
+    transition: filter 0.3s ease;
+}
+
+/* Popup Game Over perfettamente centrato sopra il canvas */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Gestito da JS */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    color: white;
+    text-align: center;
+}
+
+    #game-over-screen h1 {
+        color: #ff4757;
+        font-size: clamp(1.5rem, 8vw, 2.5rem); /* Testo fluido: si rimpicciolisce su schermi piccoli */
+        margin: 0;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+#final-score {
+    font-size: 1.2rem;
+    margin: 10px 0 20px 0;
+}
+
+#restart-button {
+    background-color: #2ed573;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.1s;
+    -webkit-tap-highlight-color: transparent; /* Rimuove il flash blu al tocco su Android */
+}
+
+    #restart-button:active {
+        transform: scale(0.95);
+    }
+
+#instructions {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}

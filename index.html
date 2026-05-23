@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snake Mobile Edition</title>
+    <link rel="stylesheet" href="snake.css">
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- Punteggio in alto -->
+        <div id="score">Punti: 0</div>
+
+        <!-- Contenitore del gioco e del Popup -->
+        <div id="canvas-wrapper">
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- Popup Game Over (appare sopra il canvas) -->
+            <div id="game-over-screen">
+                <h1>GAME OVER</h1>
+                <p id="final-score">Punteggio finale: 0</p>
+                <button id="restart-button">TOCCA PER RICOMINCIARE</button>
+            </div>
+        </div>
+
+        <!-- Istruzioni in basso -->
+        <div id="instructions">Trascina per muovere il serpente</div>
+    </div>
+
+    <script src="snake.js"></script>
+</body>
+</html>
